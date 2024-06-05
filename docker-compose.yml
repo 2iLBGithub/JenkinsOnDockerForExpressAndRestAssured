@@ -1,0 +1,21 @@
+version: '3'
+services:
+  express-server:
+    build: ./express-server
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+  rest-assured-tests:
+    image: maven:3.6.3-jdk-8
+    volumes:
+      - ./rest-assured-tests:/usr/src/app
+    working_dir: /usr/src/app
+    command: mvn test
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
