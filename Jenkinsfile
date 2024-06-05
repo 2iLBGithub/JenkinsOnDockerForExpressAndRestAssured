@@ -1,14 +1,19 @@
 pipeline {
-    agent {
-        docker {
-            image 'jenkins-docker-express-restassured-project:latest'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
+    agent any
+    environment {
+        DOCKER_IMAGE = 'jenkins-docker-express-restassured-project:latest'
     }
     stages {
         stage('Checkout SCM') {
             steps {
                 checkout scm
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t $DOCKER_IMAGE .'
+                }
             }
         }
         stage('Build and Deploy with Docker Compose') {
