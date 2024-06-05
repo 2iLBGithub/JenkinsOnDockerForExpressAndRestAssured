@@ -1,9 +1,12 @@
 pipeline {
     agent {
         docker {
-            image 'jenkins-docker-express-restassured-project:latest'
+            image 'lb2idocker/djra_project:latest'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
+    }
+    environment {
+        WORKSPACE_DIR = "${env.WORKSPACE}"
     }
     stages {
         stage('Checkout SCM') {
@@ -14,15 +17,19 @@ pipeline {
         stage('Build and Deploy with Docker Compose') {
             steps {
                 script {
-                    sh 'docker-compose -f docker-compose.yml up --build -d'
-                    sleep 60 
+                    dir("${env.WORKSPACE_DIR}") {
+                        sh 'docker-compose up --build -d'
+                        sleep 60
+                    }
                 }
             }
         }
         stage('Run Rest-Assured Tests') {
             steps {
                 script {
-                    sh 'docker-compose -f docker-compose.yml run rest-assured-tests'
+                    dir("${env.WORKSPACE_DIR}") {
+                        sh 'docker-compose run rest-assured-tests'
+                    }
                 }
             }
         }
@@ -30,7 +37,9 @@ pipeline {
     post {
         always {
             script {
-                sh 'docker-compose -f docker-compose.yml down'
+                dir("${env.WORKSPACE_DIR}") {
+                    sh 'docker-compose down'
+                }
             }
         }
     }
