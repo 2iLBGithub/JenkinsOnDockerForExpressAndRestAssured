@@ -12,7 +12,7 @@ pipeline {
                     // Navigate to the Express server directory
                     dir('DockerExpressServer') {
                         // Start the Express server in the background
-                        sh 'node index.js &'
+                        sh 'node server.js &'
                     }
                     // Wait for the server to start
                     sleep 60
