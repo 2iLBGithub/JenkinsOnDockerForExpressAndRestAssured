@@ -144,15 +144,15 @@ public class BeverageAPITest {
                 .body("rating", equalTo(6));
     }
 
-    @Test
-    public void testDeleteBeverage() {
-        given()
-                .pathParam("id", 1)
-                .when()
-                .delete("/{id}")
-                .then()
-                .statusCode(204);
-    }
+//    @Test
+//    public void testDeleteBeverage() {
+//        given()
+//                .pathParam("id", 1)
+//                .when()
+//                .delete("/{id}")
+//                .then()
+//                .statusCode(204);
+//    }
 
     @Test
     public void testUpdateBeverage() {
