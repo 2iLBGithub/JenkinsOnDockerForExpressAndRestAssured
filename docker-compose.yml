@@ -1,16 +1,17 @@
-version: '3'
+version: '3.8'
 services:
   express-server:
-    build: ./express-server
+    image: jenkins-docker-express-restassured-project:latest
+    command: node /path/to/your/express/app.js
     ports:
       - "3000:3000"
     networks:
       - app-network
 
   rest-assured-tests:
-    image: maven:3.6.3-jdk-8
+    image: maven:3.8.4-openjdk-17
     volumes:
-      - ./rest-assured-tests:/usr/src/app
+      - ./DockerRestAssuredServer:/usr/src/app
     working_dir: /usr/src/app
     command: mvn test
     networks:

@@ -1,33 +1,33 @@
 pipeline {
     agent any
-    environment {
-        DOCKER_IMAGE = 'jenkins-docker-express-restassured-project:latest'
-    }
     stages {
         stage('Checkout SCM') {
             steps {
                 checkout scm
             }
         }
-        stage('Build Docker Image') {
+        stage('Start Express Server') {
             steps {
                 script {
-                    sh 'docker build -t $DOCKER_IMAGE .'
-                }
-            }
-        }
-        stage('Build and Deploy with Docker Compose') {
-            steps {
-                script {
-                    sh 'docker-compose -f docker-compose.yml up --build -d'
-                    sleep 60 
+                    // Navigate to the Express server directory
+                    dir('DockerExpressServer') {
+                        // Install dependencies
+                        sh 'npm install'
+                        // Start the Express server in the background
+                        sh 'node index.js &'
+                    }
+                    // Wait for the server to start
+                    sleep 10
                 }
             }
         }
         stage('Run Rest-Assured Tests') {
             steps {
                 script {
-                    sh 'docker-compose -f docker-compose.yml run rest-assured-tests'
+                    // Navigate to the Rest-Assured tests directory and run the tests
+                    dir('DockerRestAssuredServer') {
+                        sh 'mvn test'
+                    }
                 }
             }
         }
@@ -35,7 +35,8 @@ pipeline {
     post {
         always {
             script {
-                sh 'docker-compose -f docker-compose.yml down'
+                // Stop the Express server
+                sh 'pkill node'
             }
         }
     }
