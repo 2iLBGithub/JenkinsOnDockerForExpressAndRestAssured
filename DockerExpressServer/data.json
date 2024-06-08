@@ -2,17 +2,22 @@
   "beverages": [
     {
       "id": "1",
-      "name": "bad coffee",
+      "name": "green tea",
       "rating": 7
     },
     {
-      "name": "coffee",
+      "id": "2",
+      "name": "black tea",
+      "rating": 8
+    },
+    {
       "id": "3",
+      "name": "coffee",
       "rating": 6
     },
     {
-      "name": "decaff cofee",
-      "id": "2",
+      "id": "4",
+      "name": "decaff coffee",
       "rating": 8
     },
     {
