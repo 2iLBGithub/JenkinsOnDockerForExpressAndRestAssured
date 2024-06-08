@@ -11,8 +11,6 @@ pipeline {
                 script {
                     // Navigate to the Express server directory
                     dir('DockerExpressServer') {
-                        // Install dependencies
-                        sh 'npm install'
                         // Start the Express server in the background
                         sh 'node index.js &'
                     }
