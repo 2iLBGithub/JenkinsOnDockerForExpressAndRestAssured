@@ -98,7 +98,14 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 import org.junit.BeforeClass;
+import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class BeverageAPITest {
 
@@ -107,6 +114,14 @@ public class BeverageAPITest {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 3000;
         RestAssured.basePath = "/beverages";
+    }
+
+    @Before
+    public void resetData() throws IOException {
+
+        String originalFilePath = "DockerExpressServer/data.json";
+        String backupFilePath = "DockerExpressServer/dataBackup.json";
+        Files.copy(Paths.get(backupFilePath), Paths.get(originalFilePath), StandardCopyOption.REPLACE_EXISTING);
     }
 
     @Test
@@ -144,15 +159,15 @@ public class BeverageAPITest {
                 .body("rating", equalTo(6));
     }
 
-//    @Test
-//    public void testDeleteBeverage() {
-//        given()
-//                .pathParam("id", 1)
-//                .when()
-//                .delete("/{id}")
-//                .then()
-//                .statusCode(204);
-//    }
+    @Test
+    public void testDeleteBeverage() {
+        given()
+                .pathParam("id", 1)
+                .when()
+                .delete("/{id}")
+                .then()
+                .statusCode(204);
+    }
 
     @Test
     public void testUpdateBeverage() {
