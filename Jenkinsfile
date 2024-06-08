@@ -15,7 +15,7 @@ pipeline {
                         sh 'node index.js &'
                     }
                     // Wait for the server to start
-                    sleep 10
+                    sleep 60
                 }
             }
         }
