@@ -4,16 +4,13 @@ pipeline {
         stage('Checkout SCM') {
             steps {
                 checkout scm
-                script {
-                    sh 'ls -la DockerExpressServer'
-                }
             }
         }
         stage('Start Express Server') {
             steps {
                 script {
                     dir('DockerExpressServer') {
-                        sh 'nohup node server.js > server.log 2>&1 &'
+                        sh 'node server.js > server.log 2>&1 &'
                     }
                     sleep 10
                 }
