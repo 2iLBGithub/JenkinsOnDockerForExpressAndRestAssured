@@ -4,6 +4,9 @@ pipeline {
         stage('Checkout SCM') {
             steps {
                 checkout scm
+                script {
+                    sh 'ls -la DockerExpressServer'
+                }
             }
         }
         stage('Start Express Server') {
