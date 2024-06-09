@@ -118,9 +118,8 @@ public class BeverageAPITest {
 
     @Before
     public void resetData() throws IOException {
-
-        String originalFilePath = "DockerExpressServer/data.json";
-        String backupFilePath = "DockerExpressServer/dataBackup.json";
+        String originalFilePath = "../DockerExpressServer/data.json";
+        String backupFilePath = "../DockerExpressServer/dataBackup.json";
         Files.copy(Paths.get(backupFilePath), Paths.get(originalFilePath), StandardCopyOption.REPLACE_EXISTING);
     }
 
