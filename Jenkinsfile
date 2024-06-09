@@ -15,7 +15,7 @@ pipeline {
                     dir('DockerExpressServer') {
                         sh 'nohup node server.js > server.log 2>&1 &'
                     }
-                    sleep 30
+                    sleep 10
                 }
             }
         }
